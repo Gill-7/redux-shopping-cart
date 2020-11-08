@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import formatCurrency from '../util';
+import Slide from 'react-reveal/Slide'
 
 export default class Cart extends Component {
 
@@ -41,6 +42,7 @@ export default class Cart extends Component {
                 </div>
                 <div>
                     <div className="cart">
+                        <Slide left cascade>
                         <ul className="cart-items">
                             {cartItems.map(item => (
                                 <li key={item._id}>
@@ -59,6 +61,7 @@ export default class Cart extends Component {
                                 </li>
                             ))}
                         </ul>
+                        </Slide>
                     </div>
                     {cartItems.length !== 0 && (
                         <div>
@@ -72,6 +75,7 @@ export default class Cart extends Component {
                             </div>
                             </div>
                             {this.state.showCheckout && (
+                                <Slide right cascade>
                                 <div className="cart">
                                     <form onSubmit={this.createOrder}>
                                         <ul className='form-container'>
@@ -108,6 +112,7 @@ export default class Cart extends Component {
                                         </ul>
                                     </form>
                                 </div>
+                                </Slide>
                             )}
                         </div>
                     )}
