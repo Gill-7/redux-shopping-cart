@@ -3,6 +3,8 @@ import formatCurrency from '../util';
 import Slide from 'react-reveal/Slide';
 import Modal from 'react-modal';
 import Zoom from 'react-reveal/Zoom'
+import { connect } from 'react-redux';
+import { fetchProducts }  from '../actions/productsActions';
 
 class Products extends Component {
     constructor(props) {
@@ -12,6 +14,11 @@ class Products extends Component {
              product: null,
         };
     }
+    
+    componentDidMount() {
+        this.props.fetchProducts();
+    }
+
     openModal = (product) => {
         this.setState({ product });
     }
@@ -23,7 +30,11 @@ class Products extends Component {
         return (
             <div>
                 <Slide left cascade>
-                <ul className='products'>
+                    {
+                        !this.props.products ? (
+                        <div>Loading...</div>
+                        ) : (
+                            <ul className='products'>
                     {this.props.products.map((product) => (
                         <li key={product._id}>
                             <div className='product'>
@@ -45,6 +56,9 @@ class Products extends Component {
                         </li>
                     ))}
                 </ul>
+                        )
+                    }
+                
                 </Slide>
                 {
                     product && (
@@ -90,4 +104,4 @@ class Products extends Component {
     }
 }
 
-export default Products;
+export default connect((state) => ({ products: state.products.items }), {fetchProducts})(Products);
