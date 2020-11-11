@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import formatCurrency from '../util';
 import Slide from 'react-reveal/Slide'
+import { removeFromCart } from '../actions/cartActions';
+import  { connect } from 'react-redux'
 
-export default class Cart extends Component {
+class Cart extends Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
             name: '',
             email: '',
@@ -27,7 +29,7 @@ export default class Cart extends Component {
         };
         this.props.createOrder(order);
     }
-    
+
     render() {
         const { cartItems } = this.props;
         return (
@@ -81,7 +83,7 @@ export default class Cart extends Component {
                                         <ul className='form-container'>
                                             <li>
                                                 <label className='label'>Email</label>
-                                                <input 
+                                                <input
                                                 name='email'
                                                 type='email'
                                                 required
@@ -90,7 +92,7 @@ export default class Cart extends Component {
                                             </li>
                                             <li>
                                                 <label className='label'>Name</label>
-                                                <input 
+                                                <input
                                                 name='name'
                                                 type='text'
                                                 required
@@ -99,7 +101,7 @@ export default class Cart extends Component {
                                             </li>
                                             <li>
                                                 <label className='label'>Address</label>
-                                                <input 
+                                                <input
                                                 name='address'
                                                 type='text'
                                                 required
@@ -121,3 +123,9 @@ export default class Cart extends Component {
         )
     }
 }
+
+export default connect((state) =>({
+    cartItems: state.cart.cartItems,
+}),
+{ removeFromCart }
+)(Cart);
